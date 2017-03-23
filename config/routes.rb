@@ -1,15 +1,4 @@
 Rails.application.routes.draw do
-
-  get 'pages_controller/index'
-
-  get 'pages_controller/show'
-
-  get 'pages_controller/new'
-
-  get 'pages_controller/edit'
-
-  get 'pages_controller/delete'
-
   root 'demo#index'
 
   resources :subjects do
@@ -17,7 +6,15 @@ Rails.application.routes.draw do
     member do
       get :delete
     end
-    
+
+  end
+
+  resources :pages do
+
+    member do
+      get :delete
+    end
+
   end
 
   get 'demo/index'
