@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   def index
-    @page = Page.sorted
+    @pages = Page.sorted
   end
 
   def show
@@ -27,11 +27,12 @@ class PagesController < ApplicationController
 
   def update
     @page = Page.find(params[:id])
-    if @page.updated_attributes(subject_params)
+    if @page.updated_attributes(page_params)
       flash[:notice] = "Page updated successfully."
       redirect_to(page_path(@page))
     else
       render('edit')
+    end
   end
 
   def delete
@@ -47,7 +48,7 @@ class PagesController < ApplicationController
 
   private
 
-  def subject_params
-    params.require(:subject).permit(:name, :position, :visible)
+  def page_params
+    params.require(:page).permit(:name, :position, :visible)
   end
 end
