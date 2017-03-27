@@ -1,7 +1,7 @@
 class SubjectsController < ApplicationController
 
   layout 'admin'
-  
+
   def index
     #find all subjects to list them using the scope we created earlier
     @subjects = Subject.sorted
