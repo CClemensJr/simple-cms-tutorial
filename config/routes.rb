@@ -22,13 +22,14 @@ Rails.application.routes.draw do
     member do
       get :delete
     end
-    
+
   end
 
   get 'demo/index'
   get 'demo/hello'
   get 'demo/other_hello'
   get 'demo/lynda'
+  get 'demo/escape_output'
 
   # default route may go away in future versions of rails.
   #get ':controller(/:action(/:id))'
