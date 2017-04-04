@@ -79,7 +79,7 @@ a:hover {}
   clear: both;
   height: 2.5em;
   text-align: right;
-  background: $light_brown;
+  background: $light_brown image-url('footer_gradient.jpg') repeat-y 0 0;
   color: $yellow;
 
   p { margin: 0; padding: 0.5em 1em; }
