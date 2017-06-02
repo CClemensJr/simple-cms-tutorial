@@ -1,7 +1,9 @@
 class PagesController < ApplicationController
 
   layout 'admin'
-  
+  before_action :find_subjects, only: [:new, :create, :edit, :update]
+  before_action :set_page_count, only: [:new, :create, :edit, :update]
+
   def index
     @pages = Page.sorted
   end
@@ -45,7 +47,7 @@ class PagesController < ApplicationController
   def destroy
     @page = Page.find(params[:id])
     @page.destroy
-    flash[:notice] = "Page '#{@page}' deleted successfully."
+    flash[:notice] = "Page destroyed successfully."
     redirect_to(pages_path)
   end
 
@@ -54,5 +56,14 @@ class PagesController < ApplicationController
   def page_params
     params.require(:page).permit(:subject_id, :name, :position, :visible,
     :permalink)
+  end
+
+  def find_subjects
+    @subjects = Subject.sorted
+  end
+
+  def set_page_count
+    @page_count = Page.count
+    @page_count += 1 if params[:action] == 'new' || params[:action] == 'create'
   end
 end

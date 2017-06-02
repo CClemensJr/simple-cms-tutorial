@@ -1,31 +1,31 @@
 class SubjectsController < ApplicationController
+  before_action :set_subject_count, only: [:new, :create, :edit, :update]
 
   layout 'admin'
 
   def index
-    #find all subjects to list them using the scope we created earlier
+    logger.debug("*** Testing the logger. ***")
     @subjects = Subject.sorted
   end
 
   def show
-    #find a specific subject using it's db parameters
     @subject = Subject.find(params[:id])
   end
 
   def new
-    @subject = Subject.new(name: 'Default')
+    @subject = Subject.new({:name => 'Default'})
   end
 
   def create
-    #1. Instantiate a new object using form parameters
+    # Instantiate a new object using form parameters
     @subject = Subject.new(subject_params)
-    #2. Save the object
+    # Save the object
     if @subject.save
-    #3. If the save succeeds, redirect to the index action
+      # If save succeeds, redirect to the index action
       flash[:notice] = "Subject created successfully."
       redirect_to(subjects_path)
     else
-    #4. If save fails, redisplay the form so user can fix problems
+      # If save fails, redisplay the form so user can fix problems
       render('new')
     end
   end
@@ -35,15 +35,15 @@ class SubjectsController < ApplicationController
   end
 
   def update
-    #1. Instantiate a new object using form parameters
+    # Find a new object using form parameters
     @subject = Subject.find(params[:id])
-    #2. Save the object
+    # Update the object
     if @subject.update_attributes(subject_params)
-    #3. If the save succeeds, redirect to the show action
+      # If save succeeds, redirect to the show action
       flash[:notice] = "Subject updated successfully."
       redirect_to(subject_path(@subject))
     else
-    #4. If save fails, redisplay the form so user can fix problems
+      # If save fails, redisplay the form so user can fix problems
       render('edit')
     end
   end
@@ -55,14 +55,18 @@ class SubjectsController < ApplicationController
   def destroy
     @subject = Subject.find(params[:id])
     @subject.destroy
-    flash[:notice] = "Subject '#{@subject.name}' deleted successfully."
+    flash[:notice] = "Subject '#{@subject.name}' destroyed successfully."
     redirect_to(subjects_path)
   end
-
 
   private
 
   def subject_params
     params.require(:subject).permit(:name, :position, :visible, :created_at)
+  end
+
+  def set_subject_count
+    @subject_count = Subject.count
+    @subject_count += 1 if params[:action] == 'new' || params[:action] == 'create'
   end
 end
