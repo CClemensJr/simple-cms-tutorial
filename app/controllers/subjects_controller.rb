@@ -4,7 +4,6 @@ class SubjectsController < ApplicationController
   layout 'admin'
 
   def index
-    logger.debug("*** Testing the logger. ***")
     @subjects = Subject.sorted
   end
 
